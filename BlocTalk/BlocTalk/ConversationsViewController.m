@@ -23,6 +23,7 @@
     UIFont *f1 = [UIFont fontWithName:@"Helvetica" size:26.0];
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:f1, NSFontAttributeName, nil];
     [self.settingButton setTitleTextAttributes:dict forState:UIControlStateNormal];
+    
 }
 
 - (void)didReceiveMemoryWarning {

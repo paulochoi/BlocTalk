@@ -14,6 +14,7 @@
 		730823451BB1E9150055378C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 730823431BB1E9150055378C /* LaunchScreen.xib */; };
 		730823511BB1E9160055378C /* BlocTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730823501BB1E9160055378C /* BlocTalkTests.m */; };
 		7308235C1BB1F9970055378C /* ConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7308235B1BB1F9970055378C /* ConversationsViewController.m */; };
+		7308235F1BB3166C0055378C /* MultiConnectivityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7308235E1BB3166C0055378C /* MultiConnectivityManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		730823501BB1E9160055378C /* BlocTalkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocTalkTests.m; sourceTree = "<group>"; };
 		7308235A1BB1F9970055378C /* ConversationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationsViewController.h; sourceTree = "<group>"; };
 		7308235B1BB1F9970055378C /* ConversationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsViewController.m; sourceTree = "<group>"; };
+		7308235D1BB3166C0055378C /* MultiConnectivityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiConnectivityManager.h; sourceTree = "<group>"; };
+		7308235E1BB3166C0055378C /* MultiConnectivityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiConnectivityManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				730823391BB1E9150055378C /* AppDelegate.m */,
 				7308235A1BB1F9970055378C /* ConversationsViewController.h */,
 				7308235B1BB1F9970055378C /* ConversationsViewController.m */,
+				7308235D1BB3166C0055378C /* MultiConnectivityManager.h */,
+				7308235E1BB3166C0055378C /* MultiConnectivityManager.m */,
 				7308233E1BB1E9150055378C /* Main.storyboard */,
 				730823411BB1E9150055378C /* Images.xcassets */,
 				730823431BB1E9150055378C /* LaunchScreen.xib */,
@@ -221,6 +226,7 @@
 			files = (
 				7308235C1BB1F9970055378C /* ConversationsViewController.m in Sources */,
 				7308233A1BB1E9150055378C /* AppDelegate.m in Sources */,
+				7308235F1BB3166C0055378C /* MultiConnectivityManager.m in Sources */,
 				730823371BB1E9150055378C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
