@@ -7,13 +7,27 @@
 //
 
 #import "ConversationsViewController.h"
+#import "AvailableUsersTableViewCell.h"
 
-@interface ConversationsViewController ()
+@interface ConversationsViewController () <MCNearbyServiceBrowserDelegate, UITableViewDataSource, UITableViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingButton;
+@property (strong, nonatomic) MultiConnectivityManager *manager;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *userList;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 
 @end
 
 @implementation ConversationsViewController
+
+- (IBAction)startNewConversation:(id)sender {
+//    [self.manager setupMCBrowser];
+//    self.manager.browser.delegate = self;
+//    [self.manager.browser startBrowsingForPeers];
+    
+    //[self presentViewController:self.manager.browser animated:YES completion:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,21 +38,127 @@
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:f1, NSFontAttributeName, nil];
     [self.settingButton setTitleTextAttributes:dict forState:UIControlStateNormal];
     
+    
+    
+    
+    //should this go under the app delegate?
+    self.manager = [[MultiConnectivityManager alloc] init];
+    [self.manager setupPeerAndSession];
+    [self.manager advertiseSelf:TRUE];
+    
+    [self.manager setupMCBrowser];
+    self.manager.browser.delegate = self;
+    [self.manager.browser startBrowsingForPeers];
+
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setBackgroundView:nil];
+    [self.tableView setBackgroundColor:[UIColor clearColor]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(peerDidChangeStateWithNotification:)
+                                                 name:@"MCDidChangeStateNotification"
+                                               object:nil];
+    
+    self.userList = [NSMutableArray new];
+    
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-/*
-#pragma mark - Navigation
+-(void)peerDidChangeStateWithNotification:(NSNotification *)notification{
+   
+    NSNumber *state = notification.userInfo[@"state"];
+    
+    NSLog(@"%@",state);
+    
+    if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnected]] ) {
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Found Peer"
+                                                        message:[NSString stringWithFormat:@"%@", notification.userInfo]
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"OK",nil];
+        [alert show];
+        
+    } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnecting]]) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+    } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateNotConnected]] ){
+        
+    }
 }
-*/
+
+
+
+#pragma mark - browser delegate methods
+
+-(void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error {
+    
+}
+
+- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info{
+    
+    Users *user = [Users new];
+    user.name = peerID.displayName;
+    user.peerID = peerID;
+    
+    [self.userList addObject:user];
+    
+    [self.tableView reloadData];
+    
+    //[browser invitePeer:peerID toSession:self.manager.session withContext:nil timeout:5];
+
+}
+
+- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
+    
+}
+
+#pragma mark - tableView delegate methods
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    AvailableUsersTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
+    if (cell){
+        // Configure the cell...
+
+        Users *user = self.userList[indexPath.row];
+        
+        cell.userNameLabel.text = user.name;
+        cell.text.text = @"Lorem ipsum dolor sit amet, alia essent facilisis cu vel, iudico adolescens et mea. No cum vero justo signiferumque. Ut vide assueverit est, vel idque virtute man";
+        
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    Users *item = self.userList[indexPath.row];
+    
+    [self.manager.browser invitePeer: item.peerID toSession:self.manager.session withContext:nil timeout:5];
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.userList count];
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 80.0;
+}
+
+
 
 @end

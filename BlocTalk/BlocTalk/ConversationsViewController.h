@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MultiConnectivityManager.h"
+#import "Users.h"
 
-@interface ConversationsViewController : UIViewController
+@interface ConversationsViewController : UIViewController 
+
+@property (nonatomic,strong) Users *user;
 
 @end

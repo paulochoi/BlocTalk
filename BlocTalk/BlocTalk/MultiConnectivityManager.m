@@ -33,7 +33,8 @@
 
 
 -(void)setupMCBrowser {
-    self.browser = [[MCBrowserViewController alloc] initWithServiceType:@"chat-service" session:self.session];
+    //self.browser = [[MCBrowserViewController alloc] initWithServiceType:@"chat-service" session:self.session];
+    self.browser = [[MCNearbyServiceBrowser alloc] initWithPeer:self.peerID serviceType:@"chat-service"];
 }
 
 
@@ -69,6 +70,10 @@
 }
 
 -(void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state{
+    NSDictionary *dict = @{@"peerID": peerID, @"state" : [NSNumber numberWithInt:state]};
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidChangeStateNotification"
+                                                        object:nil
+                                                      userInfo:dict];
 }
 @end

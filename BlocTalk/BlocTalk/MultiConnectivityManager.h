@@ -14,7 +14,8 @@
 
 @property (nonatomic, strong) MCPeerID *peerID;
 @property (nonatomic, strong) MCSession *session;
-@property (nonatomic, strong) MCBrowserViewController *browser;
+//@property (nonatomic, strong) MCBrowserViewController *browser;
+@property (nonatomic, strong) MCNearbyServiceBrowser *browser;
 @property (nonatomic, strong) MCAdvertiserAssistant *advertiser;
 
 -(void)setupPeerAndSession;

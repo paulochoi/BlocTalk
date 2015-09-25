@@ -11,7 +11,7 @@
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) MultiConnectivityManager *mcManager;
+//@property (nonatomic, strong) MultiConnectivityManager *mcManager;
 
 
 @end
@@ -22,7 +22,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    self.mcManager = [[MultiConnectivityManager alloc] init];
+    //self.mcManager = [[MultiConnectivityManager alloc] init];
     return YES;
 }
 
