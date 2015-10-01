@@ -143,11 +143,30 @@
                     <connections>
                         <outlet property="settingButton" destination="Foq-XE-5Mf" id="Zgj-nl-Qo0"/>
                         <outlet property="tableView" destination="IDb-d8-Bzt" id="07p-Ix-cfV"/>
+                        <segue destination="iMK-Sn-LI2" kind="show" identifier="chatNow" id="oTL-WI-0jJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="409" y="267"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="xc6-CH-ddU">
+            <objects>
+                <viewController id="iMK-Sn-LI2" customClass="ChatViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8mf-Ga-5GO"/>
+                        <viewControllerLayoutGuide type="bottom" id="SbT-NQ-ZLg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mwL-HL-sJx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="owC-F3-RCa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1046" y="267"/>
         </scene>
     </scenes>
     <resources>

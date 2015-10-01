@@ -38,9 +38,6 @@
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:f1, NSFontAttributeName, nil];
     [self.settingButton setTitleTextAttributes:dict forState:UIControlStateNormal];
     
-    
-    
-    
     //should this go under the app delegate?
     self.manager = [[MultiConnectivityManager alloc] init];
     [self.manager setupPeerAndSession];
@@ -50,7 +47,6 @@
     self.manager.browser.delegate = self;
     [self.manager.browser startBrowsingForPeers];
 
-    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView setBackgroundView:nil];
@@ -62,8 +58,6 @@
                                                object:nil];
     
     self.userList = [NSMutableArray new];
-    
-    
 }
 
 - (void)dealloc {
@@ -71,28 +65,33 @@
 }
 
 -(void)peerDidChangeStateWithNotification:(NSNotification *)notification{
-   
-    NSNumber *state = notification.userInfo[@"state"];
-    
-    NSLog(@"%@",state);
-    
-    if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnected]] ) {
-        
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Found Peer"
-                                                        message:[NSString stringWithFormat:@"%@", notification.userInfo]
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"OK",nil];
-        [alert show];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSNumber *state = notification.userInfo[@"state"];
         
-    } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnecting]]) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        NSLog(@"%@",state);
         
-    } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateNotConnected]] ){
-        
-    }
+        if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnected]] ) {
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Found Peer"
+                                                            message:[NSString stringWithFormat:@"%@", notification.userInfo]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:@"OK",nil];
+            [alert show];
+            
+            [self performSegueWithIdentifier:@"chatNow" sender:self];
+            
+        } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnecting]]) {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            
+        } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateNotConnected]] ){
+            
+        }
+
+    });
 }
 
 
@@ -144,6 +143,12 @@
     Users *item = self.userList[indexPath.row];
     
     [self.manager.browser invitePeer: item.peerID toSession:self.manager.session withContext:nil timeout:5];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue isEqual: @"chatNow"]){
+        
+    }
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
