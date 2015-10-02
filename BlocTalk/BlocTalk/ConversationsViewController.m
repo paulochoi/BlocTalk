@@ -40,12 +40,19 @@
     
     //should this go under the app delegate?
     self.manager = [[MultiConnectivityManager alloc] init];
-    [self.manager setupPeerAndSession];
-    [self.manager advertiseSelf:TRUE];
+    //[self.manager setupPeerAndSession];
+    [[MultiConnectivityManager sharedInstance] setupPeerAndSession];
+    [[MultiConnectivityManager sharedInstance] advertiseSelf:TRUE];
+    //[self.manager advertiseSelf:TRUE];
     
-    [self.manager setupMCBrowser];
-    self.manager.browser.delegate = self;
-    [self.manager.browser startBrowsingForPeers];
+    [[MultiConnectivityManager sharedInstance] setupMCBrowser];
+    //[self.manager setupMCBrowser];
+    
+    [MultiConnectivityManager sharedInstance].browser.delegate = self;
+    //self.manager.browser.delegate = self;
+    
+    [[MultiConnectivityManager sharedInstance].browser startBrowsingForPeers];
+    //[self.manager.browser startBrowsingForPeers];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -142,7 +149,8 @@
     
     Users *item = self.userList[indexPath.row];
     
-    [self.manager.browser invitePeer: item.peerID toSession:self.manager.session withContext:nil timeout:5];
+    [[MultiConnectivityManager sharedInstance].browser invitePeer: item.peerID toSession:[MultiConnectivityManager sharedInstance].session withContext:nil timeout:5];
+    //[self.manager.browser invitePeer: item.peerID toSession:self.manager.session withContext:nil timeout:5];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

@@ -21,5 +21,7 @@
 -(void)setupPeerAndSession;
 -(void)setupMCBrowser;
 -(void)advertiseSelf:(BOOL)shouldAdvertise;
++(instancetype) sharedInstance;
+
 
 @end

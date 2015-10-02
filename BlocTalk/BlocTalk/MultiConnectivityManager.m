@@ -25,6 +25,15 @@
 }
 
 
++ (instancetype) sharedInstance {
+    static dispatch_once_t once;
+    static id sharedInstance;
+    dispatch_once(&once, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
 -(void)setupPeerAndSession{
     self.peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
     self.session = [[MCSession alloc] initWithPeer:self.peerID];
