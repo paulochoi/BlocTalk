@@ -11,6 +11,8 @@
 
 @interface ChatViewController () <JSQMessagesCollectionViewDataSource, JSQMessagesCollectionViewDelegateFlowLayout>
 
+@property (nonatomic, strong) NSMutableArray *messages;
+
 @end
 
 @implementation ChatViewController
@@ -36,10 +38,11 @@
     /**
      *  You MUST set your senderId and display name
      */
-    self.senderId = kJSQDemoAvatarIdSquires;
-    self.senderDisplayName = kJSQDemoAvatarDisplayNameSquires;
+    self.senderId = @"Paulo";
+    self.senderDisplayName = @"Paulo Choi";
     
     self.inputToolbar.contentView.textView.pasteDelegate = self;
+    self.messages = [NSMutableArray new];
     
     /**
      *  Load up our fake data for the demo
@@ -61,7 +64,7 @@
     self.showLoadEarlierMessagesHeader = YES;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage jsq_defaultTypingIndicatorImage]
-                                                                              style:UIBarButtonItemStyleBordered
+                                                                              style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(receiveMessagePressed:)];
     
@@ -75,7 +78,7 @@
     /**
      *  OPT-IN: allow cells to be deleted
      */
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
+    //[JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
     /**
      *  Customize your toolbar buttons
@@ -313,7 +316,10 @@
                                                           date:date
                                                           text:text];
     
-    [self.demoData.messages addObject:message];
+    //[self.demoData.messages addObject:message];
+    [self.messages addObject:message];
+    
+    
     
     [self finishSendingMessageAnimated:YES];
 }
@@ -366,13 +372,15 @@
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.demoData.messages objectAtIndex:indexPath.item];
+    //return [self.demoData.messages objectAtIndex:indexPath.item];
+    return [self.messages objectAtIndex:indexPath.item];
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.demoData.messages removeObjectAtIndex:indexPath.item];
-}
+    [self.messages removeObjectAtIndex:indexPath.item];
+    //[self.demoData.messages removeObjectAtIndex:indexPath.item];
+}   
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -383,7 +391,8 @@
      *  Otherwise, return your previously created bubble image data objects.
      */
     
-    JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    //JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.demoData.outgoingBubbleImageData;
@@ -414,7 +423,8 @@
      *
      *  Override the defaults in `viewDidLoad`
      */
-    JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    //JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
         if (![NSUserDefaults outgoingAvatarSetting]) {
@@ -440,7 +450,8 @@
      *  Show a timestamp for every 3rd message
      */
     if (indexPath.item % 3 == 0) {
-        JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+        //JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+        JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
         return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
     }
     
@@ -449,7 +460,8 @@
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
-    JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    //JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     /**
      *  iOS7-style sender name labels
@@ -459,7 +471,8 @@
     }
     
     if (indexPath.item - 1 > 0) {
-        JSQMessage *previousMessage = [self.demoData.messages objectAtIndex:indexPath.item - 1];
+        //JSQMessage *previousMessage = [self.demoData.messages objectAtIndex:indexPath.item - 1];
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:message.senderId]) {
             return nil;
         }
@@ -480,7 +493,9 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.demoData.messages count];
+    //return [self.demoData.messages count];
+    return [self.messages count];
+
 }
 
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -504,7 +519,8 @@
      *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
     
-    JSQMessage *msg = [self.demoData.messages objectAtIndex:indexPath.item];
+    //JSQMessage *msg = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *msg = [self.messages objectAtIndex:indexPath.item];
     
     if (!msg.isMediaMessage) {
         
@@ -591,13 +607,15 @@
     /**
      *  iOS7-style sender name labels
      */
-    JSQMessage *currentMessage = [self.demoData.messages objectAtIndex:indexPath.item];
+    //JSQMessage *currentMessage = [self.demoData.messages objectAtIndex:indexPath.item];
+    JSQMessage *currentMessage = [self.messages objectAtIndex:indexPath.item];
     if ([[currentMessage senderId] isEqualToString:self.senderId]) {
         return 0.0f;
     }
     
     if (indexPath.item - 1 > 0) {
-        JSQMessage *previousMessage = [self.demoData.messages objectAtIndex:indexPath.item - 1];
+        //JSQMessage *previousMessage = [self.demoData.messages objectAtIndex:indexPath.item - 1];
+        JSQMessage *previousMessage = [self.messages objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:[currentMessage senderId]]) {
             return 0.0f;
         }

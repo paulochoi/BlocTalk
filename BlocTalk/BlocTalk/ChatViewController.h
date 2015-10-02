@@ -10,11 +10,13 @@
 #import <JSQMessagesViewController/JSQMessages.h>
 #import "DemoModelData.h"
 #import "NSUserDefaults+DemoSettings.h"
+#import "Conversations.h"
 
 
 @interface ChatViewController : JSQMessagesViewController <UIActionSheetDelegate, JSQMessagesComposerTextViewPasteDelegate>
 
 @property (strong, nonatomic) DemoModelData *demoData;
+@property (strong, nonatomic) Conversations *conversations;
 
 - (void)receiveMessagePressed:(UIBarButtonItem *)sender;
 

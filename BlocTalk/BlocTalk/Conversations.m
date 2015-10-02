@@ -11,4 +11,23 @@
 @implementation Conversations
 
 
+- (instancetype)init {
+    self = [super init];
+    
+    if (self){
+        /**
+         *  Create message bubble images objects.
+         *
+         *  Be sure to create your bubble images one time and reuse them for good performance.
+         *
+         */
+        JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
+        
+        self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
+        self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+    }
+    
+    return self;
+}
+
 @end
