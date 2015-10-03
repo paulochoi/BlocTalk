@@ -38,8 +38,6 @@
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:f1, NSFontAttributeName, nil];
     [self.settingButton setTitleTextAttributes:dict forState:UIControlStateNormal];
     
-    //should this go under the app delegate?
-
     [[MultiConnectivityManager sharedInstance] setupPeerAndSession];
     [[MultiConnectivityManager sharedInstance] advertiseSelf:TRUE];
     [[MultiConnectivityManager sharedInstance] setupMCBrowser];

@@ -16,6 +16,8 @@
 
 @property (nonatomic, strong) NSMutableArray *messages;
 @property (nonatomic, strong) ChatViewController *delegate;
+@property (nonatomic, strong) JSQMessagesBubbleImage *outgoingBubbleImageData;
+@property (nonatomic, strong) JSQMessagesBubbleImage *incomingBubbleImageData;
 
 @end
 
@@ -45,11 +47,18 @@
     /**
      *  You MUST set your senderId and display name
      */
-    self.senderId = [[UIDevice currentDevice] name];
+    
+    NSString *uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+
+    self.senderId = uniqueIdentifier;
     self.senderDisplayName = [[UIDevice currentDevice] name];
     
     self.inputToolbar.contentView.textView.pasteDelegate = self;
     self.messages = [NSMutableArray new];
+    
+    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
     
     /**
      *  Load up our fake data for the demo
@@ -68,12 +77,7 @@
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     }
     
-    self.showLoadEarlierMessagesHeader = YES;
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage jsq_defaultTypingIndicatorImage]
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(receiveMessagePressed:)];
+    self.showLoadEarlierMessagesHeader = NO;
     
     /**
      *  Register custom menu actions for cells.
@@ -159,7 +163,6 @@
 {
     //[self.delegateModal didDismissJSQDemoViewController:self];
 }
-
 
 
 
@@ -275,10 +278,10 @@
     JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
-        return self.demoData.outgoingBubbleImageData;
+        return self.outgoingBubbleImageData;
     }
     
-    return self.demoData.incomingBubbleImageData;
+    return self.incomingBubbleImageData;
 }
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -316,7 +319,6 @@
             return nil;
         }
     }
-    
     
     return [self.demoData.avatars objectForKey:message.senderId];
 }
