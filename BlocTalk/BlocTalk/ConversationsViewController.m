@@ -39,7 +39,7 @@
     [self.settingButton setTitleTextAttributes:dict forState:UIControlStateNormal];
     
     //should this go under the app delegate?
-    self.manager = [[MultiConnectivityManager alloc] init];
+    //self.manager = [[MultiConnectivityManager alloc] init];
     //[self.manager setupPeerAndSession];
     [[MultiConnectivityManager sharedInstance] setupPeerAndSession];
     [[MultiConnectivityManager sharedInstance] advertiseSelf:TRUE];

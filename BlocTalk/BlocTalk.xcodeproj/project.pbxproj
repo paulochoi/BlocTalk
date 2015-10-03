@@ -21,6 +21,7 @@
 		73160CDE1BBDB5200070E0C6 /* DemoModelData.m in Sources */ = {isa = PBXBuildFile; fileRef = 73160CDD1BBDB5200070E0C6 /* DemoModelData.m */; };
 		73160CE01BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 73160CDF1BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m */; };
 		73160CE21BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h in Sources */ = {isa = PBXBuildFile; fileRef = 73160CE11BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h */; };
+		7359DA881BBED8F500078F96 /* AutoCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359DA861BBED8F500078F96 /* AutoCoding.m */; };
 		7375EAFA1BBDA1A300AB53CC /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7375EAF91BBDA1A300AB53CC /* ChatViewController.m */; };
 		73899FAB1BB59776004121D6 /* AvailableUsersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 73899FAA1BB59776004121D6 /* AvailableUsersTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,8 @@
 		73160CDD1BBDB5200070E0C6 /* DemoModelData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoModelData.m; sourceTree = "<group>"; };
 		73160CDF1BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+DemoSettings.m"; sourceTree = "<group>"; };
 		73160CE11BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+DemoSettings.h"; sourceTree = "<group>"; };
+		7359DA861BBED8F500078F96 /* AutoCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCoding.m; sourceTree = "<group>"; };
+		7359DA871BBED8F500078F96 /* AutoCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCoding.h; sourceTree = "<group>"; };
 		7375EAF81BBDA1A300AB53CC /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		7375EAF91BBDA1A300AB53CC /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		73899FA91BB59776004121D6 /* AvailableUsersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableUsersTableViewCell.h; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 		730823341BB1E9150055378C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7359DA861BBED8F500078F96 /* AutoCoding.m */,
+				7359DA871BBED8F500078F96 /* AutoCoding.h */,
 				73160CDF1BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m */,
 				73160CE11BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h */,
 				7308233E1BB1E9150055378C /* Main.storyboard */,
@@ -338,6 +343,7 @@
 				73160CE01BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m in Sources */,
 				7308233A1BB1E9150055378C /* AppDelegate.m in Sources */,
 				73160CE21BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h in Sources */,
+				7359DA881BBED8F500078F96 /* AutoCoding.m in Sources */,
 				7308235F1BB3166C0055378C /* MultiConnectivityManager.m in Sources */,
 				7375EAFA1BBDA1A300AB53CC /* ChatViewController.m in Sources */,
 				730823371BB1E9150055378C /* main.m in Sources */,

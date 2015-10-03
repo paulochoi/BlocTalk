@@ -7,11 +7,15 @@
 //
 
 #import "ChatViewController.h"
+#import "MultiConnectivityManager.h"
+
+
 
 
 @interface ChatViewController () <JSQMessagesCollectionViewDataSource, JSQMessagesCollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSMutableArray *messages;
+@property (nonatomic, strong) ChatViewController *delegate;
 
 @end
 
@@ -32,6 +36,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //self.delegate
+    
     
     self.title = @"JSQMessages";
     
@@ -92,6 +99,22 @@
      *
      *  self.inputToolbar.maximumHeight = 150;
      */
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveDataWithNotification:)
+                                                 name:@"MCDidReceiveDataNotification"
+                                               object:nil];
+}
+
+
+- (void) didReceiveDataWithNotification: (NSNotification *) notification{
+    
+    JSQMessage *message = [NSKeyedUnarchiver unarchiveObjectWithData: [[notification userInfo] objectForKey:@"data"]];
+    [self.messages addObject:message];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -155,7 +178,7 @@
     /**
      *  Copy last sent message, this will be the new "received" message
      */
-    JSQMessage *copyMessage = [[self.demoData.messages lastObject] copy];
+    JSQMessage *copyMessage = [[self.messages lastObject] copy];
     
     if (!copyMessage) {
         copyMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdJobs
@@ -309,6 +332,9 @@
      *  2. Add new id<JSQMessageData> object to your data source
      *  3. Call `finishSendingMessage`
      */
+    
+    NSArray *allPeers = [MultiConnectivityManager sharedInstance].session.connectedPeers;
+
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
     JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
@@ -318,8 +344,16 @@
     
     //[self.demoData.messages addObject:message];
     [self.messages addObject:message];
+    NSError *error;
     
-    
+    NSData *mediaItemData = [NSKeyedArchiver archivedDataWithRootObject:message];
+
+    [[MultiConnectivityManager sharedInstance].session sendData:mediaItemData toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
+        
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+
     
     [self finishSendingMessageAnimated:YES];
 }

@@ -70,7 +70,13 @@
 }
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID{
-
+    NSDictionary *dict = @{@"data": data,
+                           @"peerID": peerID
+                           };
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidReceiveDataNotification"
+                                                        object:nil
+                                                      userInfo:dict];
 }
 
 
@@ -84,5 +90,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidChangeStateNotification"
                                                         object:nil
                                                       userInfo:dict];
+    
+    //NSMAPTABLE keys are strong and objects are weak
 }
 @end
