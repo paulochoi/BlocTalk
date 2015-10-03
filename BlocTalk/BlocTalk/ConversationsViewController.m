@@ -39,20 +39,13 @@
     [self.settingButton setTitleTextAttributes:dict forState:UIControlStateNormal];
     
     //should this go under the app delegate?
-    //self.manager = [[MultiConnectivityManager alloc] init];
-    //[self.manager setupPeerAndSession];
+
     [[MultiConnectivityManager sharedInstance] setupPeerAndSession];
     [[MultiConnectivityManager sharedInstance] advertiseSelf:TRUE];
-    //[self.manager advertiseSelf:TRUE];
-    
     [[MultiConnectivityManager sharedInstance] setupMCBrowser];
-    //[self.manager setupMCBrowser];
     
     [MultiConnectivityManager sharedInstance].browser.delegate = self;
-    //self.manager.browser.delegate = self;
-    
     [[MultiConnectivityManager sharedInstance].browser startBrowsingForPeers];
-    //[self.manager.browser startBrowsingForPeers];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -171,7 +164,5 @@
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80.0;
 }
-
-
 
 @end
