@@ -37,11 +37,12 @@
     /**
      *  You MUST set your senderId and display name
      */
-    self.senderId = [NSString stringWithFormat:@"%@",[MultiConnectivityManager sharedInstance].peerID];
+    self.senderId = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]];
     self.senderDisplayName = [[UIDevice currentDevice] name];
     
     self.inputToolbar.contentView.textView.pasteDelegate = self;
-    self.messages = [[[MultiConnectivityManager sharedInstance] loadMessagesForPeerID: self.peerID] mutableCopy];
+    
+    self.messages = [[[MultiConnectivityManager sharedInstance] loadMessagesForPeerID: [[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]] mutableCopy];
     
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
@@ -178,6 +179,7 @@
     }
     
     [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.peerID];
+    
     
     [self finishSendingMessageAnimated:YES];
 }

@@ -76,10 +76,15 @@
     NSArray *array;
     
     @try {
-        array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathForFilename:[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]]];
+        if ([NSKeyedUnarchiver unarchiveObjectWithFile:[self pathForFilename:peerID]]){
+            array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathForFilename:peerID]];
+        } else {
+            array = [NSArray new];
+        }
+        
     }
     @catch (NSException *exception) {
-        array = @[];
+        array = [NSArray new];
     }
     
     return array;

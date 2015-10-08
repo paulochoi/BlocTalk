@@ -13,13 +13,12 @@
 #import "Conversations.h"
 
 
-@interface ChatViewController : JSQMessagesViewController <UIActionSheetDelegate, JSQMessagesComposerTextViewPasteDelegate>
+@interface ChatViewController : JSQMessagesViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) DemoModelData *demoData;
 @property (strong, nonatomic) Conversations *conversations;
 @property (copy, nonatomic) NSString *peerID;
 
-- (void)receiveMessagePressed:(UIBarButtonItem *)sender;
 - (void)closePressed:(UIBarButtonItem *)sender;
 
 
