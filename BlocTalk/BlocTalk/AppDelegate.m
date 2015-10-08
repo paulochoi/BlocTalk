@@ -23,6 +23,15 @@
     // Override point for customization after application launch.
     
     //self.mcManager = [[MultiConnectivityManager alloc] init];
+    
+    
+    
+    if (![[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]){
+        NSString *UUID = [[NSUUID UUID] UUIDString];
+        [[NSUserDefaults standardUserDefaults] setObject:UUID forKey:@"UUID"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     return YES;
 }
 

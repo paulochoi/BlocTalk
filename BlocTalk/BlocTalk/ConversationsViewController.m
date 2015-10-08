@@ -8,6 +8,7 @@
 
 #import "ConversationsViewController.h"
 #import "AvailableUsersTableViewCell.h"
+#import "ChatViewController.h"
 
 @interface ConversationsViewController () <MCNearbyServiceBrowserDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *userList;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+
 
 @end
 
@@ -66,6 +68,8 @@
 
     dispatch_async(dispatch_get_main_queue(), ^{
         NSNumber *state = notification.userInfo[@"state"];
+        MCPeerID *userDeviceID = notification.userInfo[@"peerID"];
+        NSString *userDeviceFileName = [NSString stringWithFormat:@"%@",userDeviceID];
         
         NSLog(@"%@",state);
         
@@ -73,14 +77,23 @@
             
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Found Peer"
-                                                            message:[NSString stringWithFormat:@"%@", notification.userInfo]
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Cancel"
-                                                  otherButtonTitles:@"OK",nil];
-            [alert show];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Found Peer"
+//                                                            message:[NSString stringWithFormat:@"%@", notification.userInfo]
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"Cancel"
+//                                                  otherButtonTitles:@"OK",nil];
+//            [alert show];
             
-            [self performSegueWithIdentifier:@"chatNow" sender:self];
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                NSString *fullPath = [self pathForFilename:userDeviceFileName];
+//                NSMutableArray *storedMediaItems = [NSKeyedUnarchiver unarchiveObjectWithFile:fullPath];
+//                
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    NSLog(@"  %@", storedMediaItems);
+//                });
+//            });
+        
+            [self performSegueWithIdentifier:@"chatNow" sender:userDeviceID];
             
         } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnecting]]) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -92,6 +105,12 @@
     });
 }
 
+- (NSString *) pathForFilename:(NSString *) filename {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:filename];
+    return dataPath;
+}
 
 
 #pragma mark - browser delegate methods
@@ -145,8 +164,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue isEqual: @"chatNow"]){
+    if ([segue.identifier isEqual: @"chatNow"]){
+        ChatViewController *chat = segue.destinationViewController;
         
+        chat.peerID = sender;
     }
 }
 

@@ -17,9 +17,10 @@
 
 @property (strong, nonatomic) DemoModelData *demoData;
 @property (strong, nonatomic) Conversations *conversations;
+@property (copy, nonatomic) NSString *peerID;
 
 - (void)receiveMessagePressed:(UIBarButtonItem *)sender;
-
 - (void)closePressed:(UIBarButtonItem *)sender;
+
 
 @end

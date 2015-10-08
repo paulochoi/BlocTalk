@@ -58,6 +58,32 @@
     }
 }
 
+- (void) saveDataToDiskWithMessageArray: (NSArray *)messages fromUser: (NSString *) userID{
+    
+    [NSKeyedArchiver archiveRootObject:messages toFile:[self pathForFilename:userID]];
+
+}
+
+- (NSString *) pathForFilename:(NSString *) filename {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:filename];
+    return dataPath;
+}
+
+- (NSArray *) loadMessagesForPeerID: (NSString *) peerID {
+    
+    NSArray *array;
+    
+    @try {
+        array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathForFilename:peerID]];
+    }
+    @catch (NSException *exception) {
+        array = @[];
+    }
+    
+    return array;
+}
 
 #pragma MARK - Delegate Methods
 - (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progres
@@ -77,7 +103,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidReceiveDataNotification"
                                                         object:nil
                                                       userInfo:dict];
-}
+} 
 
 
 - (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID{
@@ -85,7 +111,9 @@
 }
 
 -(void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state{
-    NSDictionary *dict = @{@"peerID": peerID, @"state" : [NSNumber numberWithInt:state]};
+    
+    NSDictionary *dict = @{@"peerID": peerID.displayName, @"state" : [NSNumber numberWithInt:state]};
+    
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidChangeStateNotification"
                                                         object:nil

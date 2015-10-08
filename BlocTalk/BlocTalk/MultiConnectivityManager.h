@@ -22,6 +22,7 @@
 -(void)setupMCBrowser;
 -(void)advertiseSelf:(BOOL)shouldAdvertise;
 +(instancetype) sharedInstance;
-
+- (void)saveDataToDiskWithMessageArray: (NSArray *)array fromUser: (NSString *) userID;
+- (NSArray *) loadMessagesForPeerID: (NSString *) peerID;
 
 @end

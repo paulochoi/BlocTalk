@@ -48,13 +48,15 @@
      *  You MUST set your senderId and display name
      */
     
-    NSString *uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    //NSString *uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
 
-    self.senderId = uniqueIdentifier;
+    //self.senderId = uniqueIdentifier;
+    self.senderId = [NSString stringWithFormat:@"%@",[MultiConnectivityManager sharedInstance].peerID];
     self.senderDisplayName = [[UIDevice currentDevice] name];
     
     self.inputToolbar.contentView.textView.pasteDelegate = self;
-    self.messages = [NSMutableArray new];
+    self.messages = [[[MultiConnectivityManager sharedInstance] loadMessagesForPeerID: self.peerID] mutableCopy];
+    
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
     self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
@@ -116,10 +118,14 @@
     JSQMessage *message = [NSKeyedUnarchiver unarchiveObjectWithData: [[notification userInfo] objectForKey:@"data"]];
     [self.messages addObject:message];
     
+    [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.peerID];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.collectionView reloadData];
     });
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -202,7 +208,8 @@
     if (error) {
         NSLog(@"%@", [error localizedDescription]);
     }
-
+    
+    [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.peerID];
     
     [self finishSendingMessageAnimated:YES];
 }
@@ -547,7 +554,7 @@
                                                  senderDisplayName:self.senderDisplayName
                                                               date:[NSDate date]
                                                              media:item];
-        [self.demoData.messages addObject:message];
+        [self.messages addObject:message];
         [self finishSendingMessage];
         return NO;
     }
