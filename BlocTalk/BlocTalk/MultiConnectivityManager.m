@@ -60,14 +60,14 @@
 
 - (void) saveDataToDiskWithMessageArray: (NSArray *)messages fromUser: (NSString *) userID{
     
-    [NSKeyedArchiver archiveRootObject:messages toFile:[self pathForFilename:userID]];
+    [NSKeyedArchiver archiveRootObject:messages toFile:[self pathForFilename:[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]]];
 
 }
 
 - (NSString *) pathForFilename:(NSString *) filename {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths firstObject];
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:filename];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]];
     return dataPath;
 }
 
@@ -76,7 +76,7 @@
     NSArray *array;
     
     @try {
-        array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathForFilename:peerID]];
+        array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self pathForFilename:[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]]];
     }
     @catch (NSException *exception) {
         array = @[];

@@ -26,20 +26,10 @@
 
 #pragma mark - View lifecycle
 
-/**
- *  Override point for customization.
- *
- *  Customize your view.
- *  Look at the properties on `JSQMessagesViewController` and `JSQMessagesCollectionView` to see what is possible.
- *
- *  Customize your layout.
- *  Look at the properties on `JSQMessagesCollectionViewFlowLayout` to see what is possible.
- */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //self.delegate
     
     
     self.title = @"JSQMessages";
@@ -47,10 +37,6 @@
     /**
      *  You MUST set your senderId and display name
      */
-    
-    //NSString *uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-
-    //self.senderId = uniqueIdentifier;
     self.senderId = [NSString stringWithFormat:@"%@",[MultiConnectivityManager sharedInstance].peerID];
     self.senderDisplayName = [[UIDevice currentDevice] name];
     
@@ -61,11 +47,6 @@
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
     self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
-    
-    /**
-     *  Load up our fake data for the demo
-     */
-    //self.demoData = [[DemoModelData alloc] init];
     
     
     /**
@@ -87,11 +68,6 @@
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(customAction:)];
     [UIMenuController sharedMenuController].menuItems = @[ [[UIMenuItem alloc] initWithTitle:@"Custom Action"
                                                                                       action:@selector(customAction:)] ];
-    
-    /**
-     *  OPT-IN: allow cells to be deleted
-     */
-    //[JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
     /**
      *  Customize your toolbar buttons
@@ -130,13 +106,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-//    if (self.delegateModal) {
-//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
-//                                                                                              target:self
-//                                                                                              action:@selector(closePressed:)];
-//    }
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -197,7 +166,6 @@
                                                           date:date
                                                           text:text];
     
-    //[self.demoData.messages addObject:message];
     [self.messages addObject:message];
     NSError *error;
     
@@ -281,7 +249,6 @@
      *  Otherwise, return your previously created bubble image data objects.
      */
     
-    //JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
     JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
@@ -452,6 +419,7 @@
     [super collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
 }
 
+
 - (void)customAction:(id)sender
 {
     NSLog(@"Custom action received! Sender: %@", sender);
@@ -542,23 +510,5 @@
     NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
 }
 
-#pragma mark - JSQMessagesComposerTextViewPasteDelegate methods
-
-
-- (BOOL)composerTextView:(JSQMessagesComposerTextView *)textView shouldPasteWithSender:(id)sender
-{
-    if ([UIPasteboard generalPasteboard].image) {
-        // If there's an image in the pasteboard, construct a media item with that image and `send` it.
-        JSQPhotoMediaItem *item = [[JSQPhotoMediaItem alloc] initWithImage:[UIPasteboard generalPasteboard].image];
-        JSQMessage *message = [[JSQMessage alloc] initWithSenderId:self.senderId
-                                                 senderDisplayName:self.senderDisplayName
-                                                              date:[NSDate date]
-                                                             media:item];
-        [self.messages addObject:message];
-        [self finishSendingMessage];
-        return NO;
-    }
-    return YES;
-}
 
 @end

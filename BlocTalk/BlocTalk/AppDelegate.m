@@ -24,8 +24,6 @@
     
     //self.mcManager = [[MultiConnectivityManager alloc] init];
     
-    
-    
     if (![[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]){
         NSString *UUID = [[NSUUID UUID] UUIDString];
         [[NSUserDefaults standardUserDefaults] setObject:UUID forKey:@"UUID"];
