@@ -8,15 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
-#import "JSQMessages.h"
 
 @interface Conversations : NSObject
 
-@property (strong, nonatomic) NSMutableArray *messages;
-@property (strong, nonatomic) NSDictionary *avatars;
-@property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
-@property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
-@property (strong, nonatomic) NSDictionary *users;
+@property (nonatomic, strong) NSString *text;
+@property (nonatomic, strong) NSString *user;
+@property (nonatomic, strong) UIImage *avatar;
 
 @end

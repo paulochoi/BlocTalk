@@ -21,6 +21,8 @@
 		73160CDE1BBDB5200070E0C6 /* DemoModelData.m in Sources */ = {isa = PBXBuildFile; fileRef = 73160CDD1BBDB5200070E0C6 /* DemoModelData.m */; };
 		73160CE01BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 73160CDF1BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m */; };
 		73160CE21BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h in Sources */ = {isa = PBXBuildFile; fileRef = 73160CE11BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h */; };
+		733FC9CA1BC6FDB60002FB24 /* CurrentConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 733FC9C91BC6FDB60002FB24 /* CurrentConversationsViewController.m */; };
+		733FC9CD1BC712360002FB24 /* CurrentConversationsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 733FC9CC1BC712360002FB24 /* CurrentConversationsTableViewCell.m */; };
 		7359DA881BBED8F500078F96 /* AutoCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359DA861BBED8F500078F96 /* AutoCoding.m */; };
 		7375EAFA1BBDA1A300AB53CC /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7375EAF91BBDA1A300AB53CC /* ChatViewController.m */; };
 		73899FAB1BB59776004121D6 /* AvailableUsersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 73899FAA1BB59776004121D6 /* AvailableUsersTableViewCell.m */; };
@@ -62,6 +64,10 @@
 		73160CDD1BBDB5200070E0C6 /* DemoModelData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoModelData.m; sourceTree = "<group>"; };
 		73160CDF1BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+DemoSettings.m"; sourceTree = "<group>"; };
 		73160CE11BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+DemoSettings.h"; sourceTree = "<group>"; };
+		733FC9C81BC6FDB60002FB24 /* CurrentConversationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentConversationsViewController.h; sourceTree = "<group>"; };
+		733FC9C91BC6FDB60002FB24 /* CurrentConversationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentConversationsViewController.m; sourceTree = "<group>"; };
+		733FC9CB1BC712360002FB24 /* CurrentConversationsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentConversationsTableViewCell.h; sourceTree = "<group>"; };
+		733FC9CC1BC712360002FB24 /* CurrentConversationsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentConversationsTableViewCell.m; sourceTree = "<group>"; };
 		7359DA861BBED8F500078F96 /* AutoCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCoding.m; sourceTree = "<group>"; };
 		7359DA871BBED8F500078F96 /* AutoCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCoding.h; sourceTree = "<group>"; };
 		7375EAF81BBDA1A300AB53CC /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -181,8 +187,12 @@
 		730823641BB329A30055378C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				733FC9C81BC6FDB60002FB24 /* CurrentConversationsViewController.h */,
+				733FC9C91BC6FDB60002FB24 /* CurrentConversationsViewController.m */,
 				7308235A1BB1F9970055378C /* ConversationsViewController.h */,
 				7308235B1BB1F9970055378C /* ConversationsViewController.m */,
+				733FC9CB1BC712360002FB24 /* CurrentConversationsTableViewCell.h */,
+				733FC9CC1BC712360002FB24 /* CurrentConversationsTableViewCell.m */,
 				73899FA91BB59776004121D6 /* AvailableUsersTableViewCell.h */,
 				73899FAA1BB59776004121D6 /* AvailableUsersTableViewCell.m */,
 				7375EAF81BBDA1A300AB53CC /* ChatViewController.h */,
@@ -212,6 +222,7 @@
 				7308232E1BB1E9150055378C /* Frameworks */,
 				7308232F1BB1E9150055378C /* Resources */,
 				EF9D2A949A8D65138FD0E5F2 /* Copy Pods Resources */,
+				169EE4BD62DA195C7E670C36 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -298,6 +309,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		169EE4BD62DA195C7E670C36 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EF9D2A949A8D65138FD0E5F2 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -339,7 +365,9 @@
 				73160CDE1BBDB5200070E0C6 /* DemoModelData.m in Sources */,
 				730823671BB32A220055378C /* Conversations.m in Sources */,
 				7308235C1BB1F9970055378C /* ConversationsViewController.m in Sources */,
+				733FC9CD1BC712360002FB24 /* CurrentConversationsTableViewCell.m in Sources */,
 				730823621BB329820055378C /* Users.m in Sources */,
+				733FC9CA1BC6FDB60002FB24 /* CurrentConversationsViewController.m in Sources */,
 				73160CE01BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m in Sources */,
 				7308233A1BB1E9150055378C /* AppDelegate.m in Sources */,
 				73160CE21BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h in Sources */,

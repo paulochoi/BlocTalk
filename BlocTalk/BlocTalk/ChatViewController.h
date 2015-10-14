@@ -18,6 +18,8 @@
 @property (strong, nonatomic) DemoModelData *demoData;
 @property (strong, nonatomic) Conversations *conversations;
 @property (copy, nonatomic) NSString *peerID;
+@property (copy, nonatomic) NSString *deviceID;
+
 
 - (void)closePressed:(UIBarButtonItem *)sender;
 

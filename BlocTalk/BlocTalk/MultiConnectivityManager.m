@@ -42,15 +42,16 @@
 
 
 -(void)setupMCBrowser {
-    //self.browser = [[MCBrowserViewController alloc] initWithServiceType:@"chat-service" session:self.session];
     self.browser = [[MCNearbyServiceBrowser alloc] initWithPeer:self.peerID serviceType:@"chat-service"];
 }
 
 
 -(void)advertiseSelf:(BOOL)shouldAdvertise {
-    if (shouldAdvertise){        
-        self.advertiser = [[MCAdvertiserAssistant alloc] initWithServiceType:@"chat-service" discoveryInfo:nil session:self.session
-                           ];
+    if (shouldAdvertise){
+        NSDictionary *dict = @{@"deviceID": [[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]};
+        
+        self.advertiser = [[MCAdvertiserAssistant alloc] initWithServiceType:@"chat-service" discoveryInfo:dict session:self.session];
+        
         [self.advertiser start];
     } else {
         [self.advertiser stop];
@@ -60,14 +61,17 @@
 
 - (void) saveDataToDiskWithMessageArray: (NSArray *)messages fromUser: (NSString *) userID{
     
-    [NSKeyedArchiver archiveRootObject:messages toFile:[self pathForFilename:[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]]];
-
+    //[NSKeyedArchiver archiveRootObject:messages toFile:[self pathForFilename:[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]]];
+    
+    
+    [NSKeyedArchiver archiveRootObject:messages toFile:[self pathForFilename:userID]];
+    
 }
 
 - (NSString *) pathForFilename:(NSString *) filename {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths firstObject];
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:filename];
     return dataPath;
 }
 
@@ -117,6 +121,7 @@
 
 -(void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state{
     
+    
     NSDictionary *dict = @{@"peerID": peerID.displayName, @"state" : [NSNumber numberWithInt:state]};
     
     
@@ -126,4 +131,5 @@
     
     //NSMAPTABLE keys are strong and objects are weak
 }
+
 @end

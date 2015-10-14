@@ -15,5 +15,6 @@
 @property (nonatomic,strong) NSString *name;
 @property (nonatomic,strong) UIImage *avatar;
 @property (nonatomic,strong) MCPeerID *peerID;
+@property (nonatomic,strong) NSString *userID;
 
 @end

@@ -11,13 +11,13 @@
 
 
 
-
 @interface ChatViewController () <JSQMessagesCollectionViewDataSource, JSQMessagesCollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSMutableArray *messages;
 @property (nonatomic, strong) ChatViewController *delegate;
 @property (nonatomic, strong) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (nonatomic, strong) JSQMessagesBubbleImage *incomingBubbleImageData;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationTab;
 
 @end
 
@@ -40,9 +40,7 @@
     self.senderId = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]];
     self.senderDisplayName = [[UIDevice currentDevice] name];
     
-    self.inputToolbar.contentView.textView.pasteDelegate = self;
-    
-    self.messages = [[[MultiConnectivityManager sharedInstance] loadMessagesForPeerID: [[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]] mutableCopy];
+    self.messages = [[[MultiConnectivityManager sharedInstance] loadMessagesForPeerID: self.deviceID] mutableCopy];
     
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
@@ -95,7 +93,7 @@
     JSQMessage *message = [NSKeyedUnarchiver unarchiveObjectWithData: [[notification userInfo] objectForKey:@"data"]];
     [self.messages addObject:message];
     
-    [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.peerID];
+    [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.deviceID];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.collectionView reloadData];
@@ -107,6 +105,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.navigationTab.superview bringSubviewToFront:self.navigationTab];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -178,7 +179,7 @@
         NSLog(@"%@", [error localizedDescription]);
     }
     
-    [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.peerID];
+    [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.deviceID];
     
     
     [self finishSendingMessageAnimated:YES];

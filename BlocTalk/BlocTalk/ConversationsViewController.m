@@ -9,19 +9,28 @@
 #import "ConversationsViewController.h"
 #import "AvailableUsersTableViewCell.h"
 #import "ChatViewController.h"
+#import "MBProgressHUD.h"
 
 @interface ConversationsViewController () <MCNearbyServiceBrowserDelegate, UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeWindow;
+
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingButton;
 @property (strong, nonatomic) MultiConnectivityManager *manager;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *userList;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (assign, nonatomic) NSInteger clickedRow;
 
 
 @end
 
 @implementation ConversationsViewController
+
+- (IBAction)closeWindow:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];;
+}
+
 
 - (IBAction)startNewConversation:(id)sender {
 //    [self.manager setupMCBrowser];
@@ -68,39 +77,38 @@
 
     dispatch_async(dispatch_get_main_queue(), ^{
         NSNumber *state = notification.userInfo[@"state"];
-        MCPeerID *userDeviceID = notification.userInfo[@"peerID"];
-        NSString *userDeviceFileName = [NSString stringWithFormat:@"%@",userDeviceID];
+        MCPeerID *userPeerID = notification.userInfo[@"peerID"];
+        NSString *userDeviceFileName = [NSString stringWithFormat:@"%@",userPeerID];
+        Users *user = self.userList[self.clickedRow];
+        
+        NSDictionary *dict = @{@"userDeviceID": userPeerID,
+                               @"userID": user.userID
+                               };
+        
         
         NSLog(@"%@",state);
         
         if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnected]] ) {
             
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Found Peer"
-//                                                            message:[NSString stringWithFormat:@"%@", notification.userInfo]
-//                                                           delegate:self
-//                                                  cancelButtonTitle:@"Cancel"
-//                                                  otherButtonTitles:@"OK",nil];
-//            [alert show];
-            
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                NSString *fullPath = [self pathForFilename:userDeviceFileName];
-//                NSMutableArray *storedMediaItems = [NSKeyedUnarchiver unarchiveObjectWithFile:fullPath];
-//                
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    NSLog(@"  %@", storedMediaItems);
-//                });
-//            });
         
-            [self performSegueWithIdentifier:@"chatNow" sender:userDeviceID];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+            
+            [self performSegueWithIdentifier:@"chatNow" sender:dict];
             
         } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnecting]]) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            
             
         } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateNotConnected]] ){
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
         }
+        
 
     });
 }
@@ -124,6 +132,7 @@
     Users *user = [Users new];
     user.name = peerID.displayName;
     user.peerID = peerID;
+    user.userID = info[@"deviceID"];
     
     [self.userList addObject:user];
     
@@ -159,7 +168,10 @@
     
     Users *item = self.userList[indexPath.row];
     
-    [[MultiConnectivityManager sharedInstance].browser invitePeer: item.peerID toSession:[MultiConnectivityManager sharedInstance].session withContext:nil timeout:5];
+    self.clickedRow = indexPath.row;
+    
+    [[MultiConnectivityManager sharedInstance].browser invitePeer: item.peerID toSession:[MultiConnectivityManager sharedInstance].session withContext:nil timeout:20];
+    
     //[self.manager.browser invitePeer: item.peerID toSession:self.manager.session withContext:nil timeout:5];
 }
 
@@ -167,7 +179,8 @@
     if ([segue.identifier isEqual: @"chatNow"]){
         ChatViewController *chat = segue.destinationViewController;
         
-        chat.peerID = sender;
+        chat.peerID = sender[@"userPeerID"];
+        chat.deviceID = sender[@"userID"];
     }
 }
 
