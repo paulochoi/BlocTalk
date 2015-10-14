@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SWTableViewCell.h>
 
-@interface CurrentConversationsTableViewCell : UITableViewCell
+
+@interface CurrentConversationsTableViewCell : SWTableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *textPreview;
 @property (weak, nonatomic) IBOutlet UILabel *userName;

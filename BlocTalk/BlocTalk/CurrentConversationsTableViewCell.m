@@ -8,6 +8,7 @@
 
 #import "CurrentConversationsTableViewCell.h"
 
+
 @implementation CurrentConversationsTableViewCell
 
 - (void)awakeFromNib {

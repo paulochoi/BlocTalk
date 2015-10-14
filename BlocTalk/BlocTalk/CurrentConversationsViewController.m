@@ -11,11 +11,11 @@
 #import "Conversations.h"
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import <JSQMessagesViewController/JSQMessages.h>
+#import <SWTableViewCell.h>
 
 
 
-
-@interface CurrentConversationsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface CurrentConversationsViewController () <UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *conversationsList;
 @property (weak, nonatomic) IBOutlet UIView *noMessage;
@@ -46,6 +46,8 @@
         
     } else {
         self.noMessage.hidden = TRUE;
+        
+        //needs for optimization
         
         for (NSString *fileName in directoryContents){
             NSString *path = [self pathForFilename:fileName];
@@ -91,6 +93,8 @@
         
         cell.textPreview.text = message.text;
         cell.userName.text = message.senderDisplayName;
+        cell.rightUtilityButtons = [self rightButtons];
+        cell.delegate = self;
         
         //cell.userName.text = user.name;
         //cell.textPreview.text = @"Lorem ipsum dolor sit amet, alia essent facilisis cu vel, iudico adolescens et mea. No cum vero justo signiferumque. Ut vide assueverit est, vel idque virtute man";
@@ -123,5 +127,38 @@
 }
 
 
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
+                                                title:@"Archive"];
+    
+    return rightUtilityButtons;
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index{
+    
+    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+    NSLog(@"%@",cellIndexPath);
+    
+    JSQMessage *message = self.conversationsList[cellIndexPath.row];
+    
+    NSString *filePath = [self pathForFilename:message.senderId];
+    NSString *newPath = [self pathForFilename:[NSString stringWithFormat:@"archiveFolder/%@",message.senderId]];
+    
+    NSLog(@"%@",newPath);
+    
+    NSError *error;
+    
+    if ( [[NSFileManager defaultManager] isReadableFileAtPath:filePath] ){
+        [[NSFileManager defaultManager] moveItemAtURL: [NSURL fileURLWithPath:filePath] toURL:[NSURL fileURLWithPath:newPath] error:&error];
+    }
+    
+    if (error){
+        NSLog(@"%@", error.localizedDescription);
+    }
+
+}
 
 @end

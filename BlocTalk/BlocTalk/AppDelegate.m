@@ -30,6 +30,25 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    //creates archive folder
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    self.archiveFolder = [documentsDirectory stringByAppendingPathComponent:@"archiveFolder"];
+    
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:self.archiveFolder]) {
+        NSError *error = nil;
+        NSDictionary *attr = [NSDictionary dictionaryWithObject:NSFileProtectionComplete
+                                                         forKey:NSFileProtectionKey];
+        
+        [[NSFileManager defaultManager] createDirectoryAtPath:self.archiveFolder
+           withIntermediateDirectories:YES
+                            attributes:attr
+                                 error:&error];
+        if (error)
+            NSLog(@"Error creating directory path: %@", [error localizedDescription]);
+    }
+    
     return YES;
 }
 

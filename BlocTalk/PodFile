@@ -1,2 +1,3 @@
 pod 'JSQMessagesViewController'
 pod 'MBProgressHUD', '~> 0.9.1'
+pod 'SWTableViewCell', '~> 0.3.7'
