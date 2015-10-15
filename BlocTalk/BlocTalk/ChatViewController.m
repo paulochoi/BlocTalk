@@ -8,7 +8,7 @@
 
 #import "ChatViewController.h"
 #import "MultiConnectivityManager.h"
-
+#import "BlocTalkJSQMessage.h"
 
 
 @interface ChatViewController () <JSQMessagesCollectionViewDataSource, JSQMessagesCollectionViewDelegateFlowLayout>
@@ -163,10 +163,12 @@
 
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
+    BlocTalkJSQMessage *message = [[BlocTalkJSQMessage alloc] initWithSenderId:senderId
                                              senderDisplayName:senderDisplayName
                                                           date:date
                                                           text:text];
+    
+    message.displayName = self.displayName;
     
     [self.messages addObject:message];
     NSError *error;

@@ -19,7 +19,7 @@
 @property (strong, nonatomic) Conversations *conversations;
 @property (copy, nonatomic) NSString *peerID;
 @property (copy, nonatomic) NSString *deviceID;
-
+@property (copy, nonatomic) NSString *displayName;
 
 - (void)closePressed:(UIBarButtonItem *)sender;
 

@@ -85,7 +85,6 @@
                                @"userID": user.userID
                                };
         
-        
         NSLog(@"%@",state);
         
         if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnected]] ) {
@@ -134,9 +133,19 @@
     user.peerID = peerID;
     user.userID = info[@"deviceID"];
     
-    [self.userList addObject:user];
+    BOOL repeats = FALSE;
+
+    for (Users *userItem in self.userList) {
+        if (peerID == userItem.peerID){
+            repeats = TRUE;
+            
+        }
+    }
     
-    [self.tableView reloadData];
+    if (repeats == FALSE){
+        [self.userList addObject:user];
+        [self.tableView reloadData];
+    }
     
     //[browser invitePeer:peerID toSession:self.manager.session withContext:nil timeout:5];
 
@@ -181,6 +190,7 @@
         
         chat.peerID = sender[@"userPeerID"];
         chat.deviceID = sender[@"userID"];
+        chat.displayName = sender[@"deviceDisplayName"];
     }
 }
 

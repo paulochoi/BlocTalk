@@ -10,7 +10,7 @@
 #import "CurrentConversationsTableViewCell.h"
 #import "Conversations.h"
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
-#import <JSQMessagesViewController/JSQMessages.h>
+#import "BlocTalkJSQMessage.h"
 #import <SWTableViewCell.h>
 
 
@@ -89,10 +89,10 @@
     if (cell){
         // Configure the cell...
         
-        JSQMessage *message = self.conversationsList[indexPath.row];
+        BlocTalkJSQMessage *message = self.conversationsList[indexPath.row];
         
         cell.textPreview.text = message.text;
-        cell.userName.text = message.senderDisplayName;
+        cell.userName.text = message.displayName;
         cell.rightUtilityButtons = [self rightButtons];
         cell.delegate = self;
         
@@ -151,6 +151,7 @@
     
     NSError *error;
     
+    //datasource
     if ( [[NSFileManager defaultManager] isReadableFileAtPath:filePath] ){
         [[NSFileManager defaultManager] moveItemAtURL: [NSURL fileURLWithPath:filePath] toURL:[NSURL fileURLWithPath:newPath] error:&error];
     }
@@ -159,6 +160,10 @@
         NSLog(@"%@", error.localizedDescription);
     }
 
+    [self.conversationsList removeObjectAtIndex:cellIndexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath]
+                          withRowAnimation:UITableViewRowAnimationAutomatic];
+    
 }
 
 @end

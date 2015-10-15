@@ -48,7 +48,8 @@
 
 -(void)advertiseSelf:(BOOL)shouldAdvertise {
     if (shouldAdvertise){
-        NSDictionary *dict = @{@"deviceID": [[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]};
+        NSDictionary *dict = @{@"deviceID": [[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"],
+                               @"deviceDisplayName": [[UIDevice currentDevice] name]};
         
         self.advertiser = [[MCAdvertiserAssistant alloc] initWithServiceType:@"chat-service" discoveryInfo:dict session:self.session];
         

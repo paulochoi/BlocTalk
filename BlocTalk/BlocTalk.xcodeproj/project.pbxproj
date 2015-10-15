@@ -26,6 +26,7 @@
 		7359DA881BBED8F500078F96 /* AutoCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359DA861BBED8F500078F96 /* AutoCoding.m */; };
 		7375EAFA1BBDA1A300AB53CC /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7375EAF91BBDA1A300AB53CC /* ChatViewController.m */; };
 		73899FAB1BB59776004121D6 /* AvailableUsersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 73899FAA1BB59776004121D6 /* AvailableUsersTableViewCell.m */; };
+		7397AC351BD023410080A430 /* BlocTalkJSQMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397AC341BD023410080A430 /* BlocTalkJSQMessage.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		7375EAF91BBDA1A300AB53CC /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		73899FA91BB59776004121D6 /* AvailableUsersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableUsersTableViewCell.h; sourceTree = "<group>"; };
 		73899FAA1BB59776004121D6 /* AvailableUsersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailableUsersTableViewCell.m; sourceTree = "<group>"; };
+		7397AC331BD023410080A430 /* BlocTalkJSQMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlocTalkJSQMessage.h; sourceTree = "<group>"; };
+		7397AC341BD023410080A430 /* BlocTalkJSQMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlocTalkJSQMessage.m; sourceTree = "<group>"; };
 		7F0FA311357BE7881FFCA6BD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -191,6 +194,8 @@
 				733FC9C91BC6FDB60002FB24 /* CurrentConversationsViewController.m */,
 				7308235A1BB1F9970055378C /* ConversationsViewController.h */,
 				7308235B1BB1F9970055378C /* ConversationsViewController.m */,
+				7397AC331BD023410080A430 /* BlocTalkJSQMessage.h */,
+				7397AC341BD023410080A430 /* BlocTalkJSQMessage.m */,
 				733FC9CB1BC712360002FB24 /* CurrentConversationsTableViewCell.h */,
 				733FC9CC1BC712360002FB24 /* CurrentConversationsTableViewCell.m */,
 				73899FA91BB59776004121D6 /* AvailableUsersTableViewCell.h */,
@@ -374,6 +379,7 @@
 				7359DA881BBED8F500078F96 /* AutoCoding.m in Sources */,
 				7308235F1BB3166C0055378C /* MultiConnectivityManager.m in Sources */,
 				7375EAFA1BBDA1A300AB53CC /* ChatViewController.m in Sources */,
+				7397AC351BD023410080A430 /* BlocTalkJSQMessage.m in Sources */,
 				730823371BB1E9150055378C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
