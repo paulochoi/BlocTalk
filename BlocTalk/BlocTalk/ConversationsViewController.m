@@ -11,6 +11,7 @@
 #import "ChatViewController.h"
 #import "MBProgressHUD.h"
 
+
 @interface ConversationsViewController () <MCNearbyServiceBrowserDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeWindow;
 
@@ -21,6 +22,7 @@
 @property (strong, nonatomic) NSMutableArray *userList;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (assign, nonatomic) NSInteger clickedRow;
+@property (strong, nonatomic) NSString *personUserDisplayName;
 
 
 @end
@@ -82,8 +84,7 @@
         Users *user = self.userList[self.clickedRow];
         
         NSDictionary *dict = @{@"userDeviceID": userPeerID,
-                               @"userID": user.userID
-                               };
+                               @"userID": user.userID};
         
         NSLog(@"%@",state);
         
@@ -107,8 +108,6 @@
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
             });
         }
-        
-
     });
 }
 
@@ -132,6 +131,8 @@
     user.name = peerID.displayName;
     user.peerID = peerID;
     user.userID = info[@"deviceID"];
+    
+    self.personUserDisplayName = info[@"deviceDisplayName"];
     
     BOOL repeats = FALSE;
 
@@ -190,7 +191,7 @@
         
         chat.peerID = sender[@"userPeerID"];
         chat.deviceID = sender[@"userID"];
-        chat.displayName = sender[@"deviceDisplayName"];
+        chat.displayName = self.personUserDisplayName;
     }
 }
 

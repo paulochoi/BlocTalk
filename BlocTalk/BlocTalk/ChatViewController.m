@@ -90,7 +90,7 @@
 
 - (void) didReceiveDataWithNotification: (NSNotification *) notification{
     
-    JSQMessage *message = [NSKeyedUnarchiver unarchiveObjectWithData: [[notification userInfo] objectForKey:@"data"]];
+    BlocTalkJSQMessage *message = [NSKeyedUnarchiver unarchiveObjectWithData: [[notification userInfo] objectForKey:@"data"]];
     [self.messages addObject:message];
     
     [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.deviceID];
@@ -170,7 +170,9 @@
     
     message.displayName = self.displayName;
     
+    
     [self.messages addObject:message];
+    
     NSError *error;
     
     NSData *mediaItemData = [NSKeyedArchiver archivedDataWithRootObject:message];
@@ -182,7 +184,6 @@
     }
     
     [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.deviceID];
-    
     
     [self finishSendingMessageAnimated:YES];
 }
@@ -286,7 +287,7 @@
      *  Override the defaults in `viewDidLoad`
      */
     //JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
-    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    BlocTalkJSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
         if (![NSUserDefaults outgoingAvatarSetting]) {

@@ -12,6 +12,7 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "BlocTalkJSQMessage.h"
 #import <SWTableViewCell.h>
+#import "MultiConnectivityManager.h"
 
 
 
@@ -55,7 +56,7 @@
             
             NSArray *unarchivedArray = [NSKeyedUnarchiver unarchiveObjectWithFile: path];
             
-            JSQMessage *lastMessage = [unarchivedArray lastObject];
+            BlocTalkJSQMessage *lastMessage = [unarchivedArray lastObject];
             
             if (unarchivedArray != nil) {
                 [self.conversationsList addObject:lastMessage];
@@ -142,7 +143,7 @@
     NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
     NSLog(@"%@",cellIndexPath);
     
-    JSQMessage *message = self.conversationsList[cellIndexPath.row];
+    BlocTalkJSQMessage *message = self.conversationsList[cellIndexPath.row];
     
     NSString *filePath = [self pathForFilename:message.senderId];
     NSString *newPath = [self pathForFilename:[NSString stringWithFormat:@"archiveFolder/%@",message.senderId]];
