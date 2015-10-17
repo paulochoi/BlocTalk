@@ -30,6 +30,8 @@
     // Do any additional setup after loading the view.
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.navigationItem.title = @"BlocTalk";
+
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths firstObject];
@@ -42,8 +44,9 @@
         NSLog(@"%@", [error localizedDescription]);
     }
     
-    if ([directoryContents count] == 1){
+    if ([directoryContents count] <= 2){
         self.tableView.hidden = TRUE;
+        self.noMessage.hidden = FALSE;
         
     } else {
         self.noMessage.hidden = TRUE;
@@ -141,29 +144,35 @@
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index{
     
     NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"%@",cellIndexPath);
+    //NSLog(@"%@",cellIndexPath);
     
     BlocTalkJSQMessage *message = self.conversationsList[cellIndexPath.row];
     
-    NSString *filePath = [self pathForFilename:message.senderId];
-    NSString *newPath = [self pathForFilename:[NSString stringWithFormat:@"archiveFolder/%@",message.senderId]];
+    NSString *filePath = [self pathForFilename:message.userID];
     
-    NSLog(@"%@",newPath);
+    NSString *newPath = [self pathForFilename:[NSString stringWithFormat:@"archiveFolder/%@",message.userID]];
+    
+    //NSLog(@"%@",newPath);
     
     NSError *error;
     
     //datasource
-    if ( [[NSFileManager defaultManager] isReadableFileAtPath:filePath] ){
-        [[NSFileManager defaultManager] moveItemAtURL: [NSURL fileURLWithPath:filePath] toURL:[NSURL fileURLWithPath:newPath] error:&error];
-    }
+        BOOL test;
+        
+    test = [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newPath error:&error];
     
     if (error){
         NSLog(@"%@", error.localizedDescription);
     }
+    
 
     [self.conversationsList removeObjectAtIndex:cellIndexPath.row];
     [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath]
                           withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    if ([self.conversationsList count] == 0){
+        self.noMessage.hidden = FALSE;
+    }
     
 }
 

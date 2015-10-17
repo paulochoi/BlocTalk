@@ -38,12 +38,12 @@
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:self.archiveFolder]) {
         NSError *error = nil;
-        NSDictionary *attr = [NSDictionary dictionaryWithObject:NSFileProtectionComplete
-                                                         forKey:NSFileProtectionKey];
+        //NSDictionary *attr = [NSDictionary dictionaryWithObject:NSFileProtectionComplete
+        //                                                forKey:NSFileProtectionKey];
         
         [[NSFileManager defaultManager] createDirectoryAtPath:self.archiveFolder
            withIntermediateDirectories:YES
-                            attributes:attr
+                            attributes:nil
                                  error:&error];
         if (error)
             NSLog(@"Error creating directory path: %@", [error localizedDescription]);

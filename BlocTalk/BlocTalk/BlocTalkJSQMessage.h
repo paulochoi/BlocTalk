@@ -11,5 +11,6 @@
 @interface BlocTalkJSQMessage : JSQMessage
 
 @property(nonatomic,strong) NSString *displayName;
+@property(nonatomic,strong) NSString *userID;
 
 @end

@@ -96,6 +96,13 @@
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
             });
             
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            
+            NSString *documentsDirectory = [paths firstObject];
+            
+            
+            
+            
             [self performSegueWithIdentifier:@"chatNow" sender:dict];
             
         } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnecting]]) {
@@ -137,6 +144,7 @@
     BOOL repeats = FALSE;
 
     for (Users *userItem in self.userList) {
+        
         if (peerID == userItem.peerID){
             repeats = TRUE;
             
@@ -187,6 +195,20 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqual: @"chatNow"]){
+        
+        NSString *filePath = [self pathForFilename:sender[@"userID"]];
+        NSString *archivePath = [self pathForFilename:[NSString stringWithFormat:@"archiveFolder/%@",sender[@"userID"]]];
+        
+        NSError *error;
+
+        if ( [[NSFileManager defaultManager] isReadableFileAtPath:archivePath] ){
+            [[NSFileManager defaultManager] moveItemAtURL: [NSURL fileURLWithPath:archivePath] toURL:[NSURL fileURLWithPath:filePath] error:&error];
+        }
+        
+        if (error){
+            NSLog(@"%@", error.localizedDescription);
+        }
+        
         ChatViewController *chat = segue.destinationViewController;
         
         chat.peerID = sender[@"userPeerID"];

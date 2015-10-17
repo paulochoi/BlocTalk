@@ -34,6 +34,7 @@
     
     self.title = @"JSQMessages";
     
+    self.navigationItem.title = self.displayName;
     /**
      *  You MUST set your senderId and display name
      */
@@ -169,6 +170,7 @@
                                                           text:text];
     
     message.displayName = self.displayName;
+    message.userID = self.deviceID;
     
     
     [self.messages addObject:message];
