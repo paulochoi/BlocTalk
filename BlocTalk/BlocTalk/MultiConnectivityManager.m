@@ -38,6 +38,10 @@
     self.peerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
     self.session = [[MCSession alloc] initWithPeer:self.peerID];
     self.session.delegate = self;
+    
+    self.deviceList = [NSMutableArray new];
+    [self.deviceList addObject:[[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"]];
+
 }
 
 

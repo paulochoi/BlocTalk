@@ -17,6 +17,8 @@
 //@property (nonatomic, strong) MCBrowserViewController *browser;
 @property (nonatomic, strong) MCNearbyServiceBrowser *browser;
 @property (nonatomic, strong) MCAdvertiserAssistant *advertiser;
+@property (strong, nonatomic) NSMutableArray *deviceList;
+
 
 -(void)setupPeerAndSession;
 -(void)setupMCBrowser;

@@ -142,22 +142,27 @@
     self.personUserDisplayName = info[@"deviceDisplayName"];
     
     BOOL repeats = FALSE;
+    
+    NSLog(@"%@",[MultiConnectivityManager sharedInstance].deviceList);
 
-    for (Users *userItem in self.userList) {
+    
+    for (NSString *userDevice in [MultiConnectivityManager sharedInstance].deviceList) {
         
-        if (peerID == userItem.peerID){
+        NSLog(@"%@",userDevice);
+        
+        if ([userDevice isEqualToString:info[@"deviceID"]]){
             repeats = TRUE;
-            
         }
     }
     
     if (repeats == FALSE){
+        
+        [[MultiConnectivityManager sharedInstance].deviceList addObject:info[@"deviceID"]];
         [self.userList addObject:user];
         [self.tableView reloadData];
     }
     
     //[browser invitePeer:peerID toSession:self.manager.session withContext:nil timeout:5];
-
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
