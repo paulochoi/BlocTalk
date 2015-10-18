@@ -33,6 +33,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="78"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pep-tw-sPw">
+                                                    <rect key="frame" x="8" y="0.0" width="552" height="71"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Userpic" translatesAutoresizingMaskIntoConstraints="NO" id="Y0l-Sk-mlP">
                                                     <rect key="frame" x="8" y="8" width="61" height="61"/>
                                                     <animations/>
@@ -60,15 +65,20 @@
                                                 </label>
                                             </subviews>
                                             <animations/>
-                                            <color key="backgroundColor" red="0.99607849120000003" green="0.99215692280000001" blue="0.99215692280000001" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="pep-tw-sPw" secondAttribute="trailing" id="4RI-Qb-hSq"/>
                                                 <constraint firstItem="DhT-ne-NUq" firstAttribute="leading" secondItem="Y0l-Sk-mlP" secondAttribute="trailing" constant="8" id="8WB-Zs-r2N"/>
                                                 <constraint firstItem="DhT-ne-NUq" firstAttribute="top" secondItem="pRQ-aj-2dg" secondAttribute="topMargin" constant="5" id="DmR-Dv-r6B"/>
                                                 <constraint firstItem="Y0l-Sk-mlP" firstAttribute="top" secondItem="pRQ-aj-2dg" secondAttribute="topMargin" id="IgD-Wp-W4a"/>
                                                 <constraint firstItem="DhT-ne-NUq" firstAttribute="centerY" secondItem="Y0l-Sk-mlP" secondAttribute="centerY" id="KOC-4H-Ysp"/>
+                                                <constraint firstAttribute="bottom" secondItem="pep-tw-sPw" secondAttribute="bottom" constant="7" id="Q3C-Zh-nQK"/>
+                                                <constraint firstItem="pep-tw-sPw" firstAttribute="leading" secondItem="pRQ-aj-2dg" secondAttribute="leadingMargin" id="UMt-ae-khO"/>
                                                 <constraint firstItem="DhT-ne-NUq" firstAttribute="leading" secondItem="Y0l-Sk-mlP" secondAttribute="leading" constant="10" id="b02-1d-kxE"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Y0l-Sk-mlP" secondAttribute="bottom" constant="8" id="cXe-fi-Egy"/>
+                                                <constraint firstItem="pep-tw-sPw" firstAttribute="leading" secondItem="Y0l-Sk-mlP" secondAttribute="trailing" id="d1k-jg-9DV"/>
                                                 <constraint firstItem="DhT-ne-NUq" firstAttribute="leading" secondItem="pRQ-aj-2dg" secondAttribute="leadingMargin" constant="2" id="dlS-ax-fPu"/>
+                                                <constraint firstItem="pep-tw-sPw" firstAttribute="top" secondItem="pRQ-aj-2dg" secondAttribute="top" id="fBj-xN-MTX"/>
                                                 <constraint firstItem="DhT-ne-NUq" firstAttribute="top" secondItem="Y0l-Sk-mlP" secondAttribute="top" id="oj6-li-w1B"/>
                                                 <constraint firstItem="DhT-ne-NUq" firstAttribute="leading" secondItem="Y0l-Sk-mlP" secondAttribute="leading" id="twW-L1-hjl"/>
                                                 <constraint firstItem="Y0l-Sk-mlP" firstAttribute="leading" secondItem="pRQ-aj-2dg" secondAttribute="leadingMargin" id="wCe-Ag-HgT"/>
@@ -76,6 +86,7 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="cXe-fi-Egy"/>
+                                                    <exclude reference="d1k-jg-9DV"/>
                                                     <exclude reference="DmR-Dv-r6B"/>
                                                     <exclude reference="b02-1d-kxE"/>
                                                     <exclude reference="dlS-ax-fPu"/>
@@ -85,6 +96,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <animations/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="avatar" destination="Y0l-Sk-mlP" id="ymS-qt-dqr"/>
                                             <outlet property="userNameLabel" destination="DhT-ne-NUq" id="KyY-8x-fBu"/>

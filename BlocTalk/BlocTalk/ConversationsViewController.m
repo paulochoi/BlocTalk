@@ -100,9 +100,6 @@
             
             NSString *documentsDirectory = [paths firstObject];
             
-            
-            
-            
             [self performSegueWithIdentifier:@"chatNow" sender:dict];
             
         } else if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnecting]]) {
@@ -193,7 +190,7 @@
     
     self.clickedRow = indexPath.row;
     
-    [[MultiConnectivityManager sharedInstance].browser invitePeer: item.peerID toSession:[MultiConnectivityManager sharedInstance].session withContext:nil timeout:20];
+    [[MultiConnectivityManager sharedInstance].browser invitePeer: item.peerID toSession:[MultiConnectivityManager sharedInstance].session withContext:nil timeout:30];
     
     //[self.manager.browser invitePeer: item.peerID toSession:self.manager.session withContext:nil timeout:5];
 }
