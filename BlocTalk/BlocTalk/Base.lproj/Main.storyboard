@@ -363,6 +363,9 @@
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title="⚙"/>
+                                <connections>
+                                    <segue destination="DKN-cv-d7V" kind="show" id="3Nu-g6-f5S"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="sAN-YZ-9l5">
@@ -384,6 +387,69 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xyj-5u-54f" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="437" y="227"/>
+        </scene>
+        <!--BlocTalk-->
+        <scene sceneID="Ogh-rR-4i5">
+            <objects>
+                <viewController id="DKN-cv-d7V" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TNR-pg-p4R"/>
+                        <viewControllerLayoutGuide type="bottom" id="xBe-p8-R1d"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NIr-hQ-Typ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d9Z-rb-tXb">
+                                <rect key="frame" x="260" y="72" width="80" height="80"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="VG0-pa-Bl9"/>
+                                    <constraint firstAttribute="height" constant="80" id="wG4-AW-vL3"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="placeholder"/>
+                                <connections>
+                                    <action selector="clickAvatar:" destination="DKN-cv-d7V" eventType="touchUpInside" id="oCK-7R-Azs"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wTH-uS-vGf">
+                                <rect key="frame" x="15" y="160" width="560" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" red="0.85490202900000001" green="0.96862751250000001" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="wTH-uS-vGf" secondAttribute="leading" id="2Bl-Ag-XkF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wTH-uS-vGf" secondAttribute="trailing" id="6sU-QB-e4d"/>
+                            <constraint firstItem="d9Z-rb-tXb" firstAttribute="top" secondItem="TNR-pg-p4R" secondAttribute="bottom" constant="8" id="QKg-vT-GQV"/>
+                            <constraint firstItem="d9Z-rb-tXb" firstAttribute="centerX" secondItem="NIr-hQ-Typ" secondAttribute="centerX" id="R2I-Kz-Klc"/>
+                            <constraint firstItem="wTH-uS-vGf" firstAttribute="top" secondItem="d9Z-rb-tXb" secondAttribute="bottom" constant="8" id="aYR-wL-z0g"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="BlocTalk" id="ocT-LC-mqJ">
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="plain" id="Hig-6t-fTV">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6fa-Ov-6by">
+                                <rect key="frame" x="526" y="11" width="54" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="avatarImage" destination="d9Z-rb-tXb" id="bGO-6H-jhd"/>
+                        <outlet property="userNameLabel" destination="wTH-uS-vGf" id="lZc-hY-bYt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OX7-kB-gAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="437" y="917"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Nuj-Xa-vOU">
@@ -407,5 +473,6 @@
     </scenes>
     <resources>
         <image name="Userpic" width="90" height="90"/>
+        <image name="placeholder" width="420" height="420"/>
     </resources>
 </document>

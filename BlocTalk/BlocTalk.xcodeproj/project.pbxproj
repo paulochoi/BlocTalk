@@ -21,6 +21,7 @@
 		73160CDE1BBDB5200070E0C6 /* DemoModelData.m in Sources */ = {isa = PBXBuildFile; fileRef = 73160CDD1BBDB5200070E0C6 /* DemoModelData.m */; };
 		73160CE01BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 73160CDF1BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m */; };
 		73160CE21BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h in Sources */ = {isa = PBXBuildFile; fileRef = 73160CE11BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h */; };
+		731AB4141BD486CA006D0452 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 731AB4131BD486CA006D0452 /* SettingsViewController.m */; settings = {ASSET_TAGS = (); }; };
 		733FC9CA1BC6FDB60002FB24 /* CurrentConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 733FC9C91BC6FDB60002FB24 /* CurrentConversationsViewController.m */; };
 		733FC9CD1BC712360002FB24 /* CurrentConversationsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 733FC9CC1BC712360002FB24 /* CurrentConversationsTableViewCell.m */; };
 		7359DA881BBED8F500078F96 /* AutoCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359DA861BBED8F500078F96 /* AutoCoding.m */; };
@@ -65,6 +66,8 @@
 		73160CDD1BBDB5200070E0C6 /* DemoModelData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoModelData.m; sourceTree = "<group>"; };
 		73160CDF1BBDB6AF0070E0C6 /* NSUserDefaults+DemoSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+DemoSettings.m"; sourceTree = "<group>"; };
 		73160CE11BBDB70E0070E0C6 /* NSUserDefaults+DemoSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+DemoSettings.h"; sourceTree = "<group>"; };
+		731AB4121BD486CA006D0452 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		731AB4131BD486CA006D0452 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		733FC9C81BC6FDB60002FB24 /* CurrentConversationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentConversationsViewController.h; sourceTree = "<group>"; };
 		733FC9C91BC6FDB60002FB24 /* CurrentConversationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentConversationsViewController.m; sourceTree = "<group>"; };
 		733FC9CB1BC712360002FB24 /* CurrentConversationsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentConversationsTableViewCell.h; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 				73899FAA1BB59776004121D6 /* AvailableUsersTableViewCell.m */,
 				7375EAF81BBDA1A300AB53CC /* ChatViewController.h */,
 				7375EAF91BBDA1A300AB53CC /* ChatViewController.m */,
+				731AB4121BD486CA006D0452 /* SettingsViewController.h */,
+				731AB4131BD486CA006D0452 /* SettingsViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 				73899FAB1BB59776004121D6 /* AvailableUsersTableViewCell.m in Sources */,
 				73160CDE1BBDB5200070E0C6 /* DemoModelData.m in Sources */,
 				730823671BB32A220055378C /* Conversations.m in Sources */,
+				731AB4141BD486CA006D0452 /* SettingsViewController.m in Sources */,
 				7308235C1BB1F9970055378C /* ConversationsViewController.m in Sources */,
 				733FC9CD1BC712360002FB24 /* CurrentConversationsTableViewCell.m in Sources */,
 				730823621BB329820055378C /* Users.m in Sources */,
