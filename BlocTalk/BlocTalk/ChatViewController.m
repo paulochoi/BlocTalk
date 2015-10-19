@@ -48,18 +48,6 @@
     self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
     
-    
-    /**
-     *  You can set custom avatar sizes
-     */
-    if (![NSUserDefaults incomingAvatarSetting]) {
-        self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-    }
-    
-    if (![NSUserDefaults outgoingAvatarSetting]) {
-        self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
-    }
-    
     self.showLoadEarlierMessagesHeader = NO;
     
     /**
@@ -268,6 +256,7 @@
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     /**
      *  Return `nil` here if you do not want avatars.
      *  If you do return `nil`, be sure to do the following in `viewDidLoad`:
@@ -289,20 +278,23 @@
      *  Override the defaults in `viewDidLoad`
      */
     //JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
-    BlocTalkJSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    //BlocTalkJSQMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    if ([message.senderId isEqualToString:self.senderId]) {
-        if (![NSUserDefaults outgoingAvatarSetting]) {
-            return nil;
-        }
-    }
-    else {
-        if (![NSUserDefaults incomingAvatarSetting]) {
-            return nil;
-        }
-    }
+//    if ([message.senderId isEqualToString:self.senderId]) {
+//        if (![NSUserDefaults outgoingAvatarSetting]) {
+//            return nil;
+//        }
+//    }
+//    else {
+//        if (![NSUserDefaults incomingAvatarSetting]) {
+//            return nil;
+//        }
+//    }
     
-    return [self.demoData.avatars objectForKey:message.senderId];
+    JSQMessagesAvatarImage *image = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+    
+    //return [self.demoData.avatars objectForKey:message.senderId];
+    return image;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath

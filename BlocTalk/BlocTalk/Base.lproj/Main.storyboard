@@ -85,8 +85,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="cXe-fi-Egy"/>
                                                     <exclude reference="d1k-jg-9DV"/>
+                                                    <exclude reference="cXe-fi-Egy"/>
                                                     <exclude reference="DmR-Dv-r6B"/>
                                                     <exclude reference="b02-1d-kxE"/>
                                                     <exclude reference="dlS-ax-fPu"/>
@@ -330,8 +330,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="uxy-p9-BgL"/>
                                 <exclude reference="EDe-22-ZOp"/>
+                                <exclude reference="uxy-p9-BgL"/>
                                 <exclude reference="7HS-mW-v1L"/>
                                 <exclude reference="8YP-or-J7A"/>
                                 <exclude reference="CP0-XB-SH5"/>
