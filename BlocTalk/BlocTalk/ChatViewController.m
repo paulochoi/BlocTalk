@@ -278,7 +278,7 @@
      *  Override the defaults in `viewDidLoad`
      */
     //JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
-    //BlocTalkJSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    
     
 //    if ([message.senderId isEqualToString:self.senderId]) {
 //        if (![NSUserDefaults outgoingAvatarSetting]) {
@@ -291,7 +291,25 @@
 //        }
 //    }
     
-    JSQMessagesAvatarImage *image = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+    BlocTalkJSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    JSQMessagesAvatarImage *image;
+    
+    if ([message.senderId isEqualToString:self.senderId]) {
+        if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userAvatar"]){
+            NSString* imageData = [[NSUserDefaults standardUserDefaults] objectForKey:@"userAvatar"];
+            
+            NSString *documentsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:imageData];
+
+            
+            image = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageWithContentsOfFile:documentsDirectory] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+        } else {
+            image = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+        }
+    } else {
+        image = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+    }
+
+    //image = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
     
     //return [self.demoData.avatars objectForKey:message.senderId];
     return image;

@@ -158,8 +158,16 @@
     
     //datasource
         BOOL test;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:newPath]){
         
-    test = [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newPath error:&error];
+        [[NSFileManager defaultManager] removeItemAtPath:newPath error:&error];
+        test = [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newPath error:&error];
+        
+    } else {
+        [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newPath error:&error];
+    }
+        
     
     if (error){
         NSLog(@"%@", error.localizedDescription);

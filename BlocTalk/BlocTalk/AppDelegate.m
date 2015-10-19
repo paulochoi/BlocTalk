@@ -30,11 +30,17 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    if (![[NSUserDefaults standardUserDefaults] stringForKey:@"UserDisplayName"]){
+        NSString *displayName = [[UIDevice currentDevice] name];
+        [[NSUserDefaults standardUserDefaults] setObject:displayName forKey:@"UserDisplayName"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     //creates archive folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths firstObject];
     self.archiveFolder = [documentsDirectory stringByAppendingPathComponent:@"archiveFolder"];
-    
+    NSString *avatars = [documentsDirectory stringByAppendingPathComponent:@"avatars"];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:self.archiveFolder]) {
         NSError *error = nil;
@@ -48,6 +54,21 @@
         if (error)
             NSLog(@"Error creating directory path: %@", [error localizedDescription]);
     }
+    
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:avatars]) {
+        NSError *error = nil;
+        //NSDictionary *attr = [NSDictionary dictionaryWithObject:NSFileProtectionComplete
+        //                                                forKey:NSFileProtectionKey];
+        
+        [[NSFileManager defaultManager] createDirectoryAtPath:avatars
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:&error];
+        if (error)
+            NSLog(@"Error creating directory path: %@", [error localizedDescription]);
+    }
+    
     
     return YES;
 }
