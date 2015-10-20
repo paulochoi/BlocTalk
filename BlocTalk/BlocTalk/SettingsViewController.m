@@ -21,12 +21,10 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:self.userNameLabel.text forKey:@"UserDisplayName"];
     
-    
     NSString *imageHash = [NSString stringWithFormat:@"avatars/%lu",[self.avatarImage.imageView.image hash]];
     
     
     NSString *documentsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:imageHash];
-
     
     [UIImagePNGRepresentation(self.avatarImage.imageView.image) writeToFile:documentsDirectory atomically:YES];
     
@@ -53,7 +51,7 @@
     
     self.userNameLabel.text = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"UserDisplayName"]];
     
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"userAvatar"]);
+    //NSLog(@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"userAvatar"]);
     
     
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userAvatar"]){
@@ -95,8 +93,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     [self.avatarImage setImage:myImage forState:UIControlStateNormal];
-    
-    
 }
 
 

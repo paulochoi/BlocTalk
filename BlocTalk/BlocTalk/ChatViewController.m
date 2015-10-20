@@ -18,6 +18,7 @@
 @property (nonatomic, strong) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (nonatomic, strong) JSQMessagesBubbleImage *incomingBubbleImageData;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationTab;
+@property (nonatomic, strong) UILocalNotification *notification;
 
 @end
 
@@ -74,6 +75,7 @@
                                              selector:@selector(didReceiveDataWithNotification:)
                                                  name:@"MCDidReceiveDataNotification"
                                                object:nil];
+
 }
 
 
@@ -83,6 +85,14 @@
     [self.messages addObject:message];
     
     [[MultiConnectivityManager sharedInstance] saveDataToDiskWithMessageArray:self.messages fromUser:self.deviceID];
+    
+    
+    self.notification = [UILocalNotification new];
+    self.notification.fireDate = nil;
+    self.notification.alertBody = message.senderDisplayName;
+    self.notification.alertAction = message.text;
+
+    [[UIApplication sharedApplication] scheduleLocalNotification:self.notification];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.collectionView reloadData];

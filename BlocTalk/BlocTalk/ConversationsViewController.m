@@ -103,13 +103,13 @@
             
             UIImage* image = [UIImage imageWithContentsOfFile:documentsDirectory];
             
-            NSData *mediaItemData = [NSKeyedArchiver archivedDataWithRootObject:image];
+            //NSData *mediaItemData = [NSKeyedArchiver archivedDataWithRootObject:image];
             
             NSError *error;
             
             NSArray *allPeers = [MultiConnectivityManager sharedInstance].session.connectedPeers;
             
-            [[MultiConnectivityManager sharedInstance].session sendData:mediaItemData toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
+            //[[MultiConnectivityManager sharedInstance].session sendData:mediaItemData toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
             
             if (error){
                 NSLog(@"%@", [error localizedDescription]);
@@ -155,12 +155,12 @@
     
     BOOL repeats = FALSE;
     
-    NSLog(@"%@",[MultiConnectivityManager sharedInstance].deviceList);
+    //NSLog(@"%@",[MultiConnectivityManager sharedInstance].deviceList);
 
     
     for (NSString *userDevice in [MultiConnectivityManager sharedInstance].deviceList) {
         
-        NSLog(@"%@",userDevice);
+        //NSLog(@"%@",userDevice);
         
         if ([userDevice isEqualToString:info[@"deviceID"]]){
             repeats = TRUE;

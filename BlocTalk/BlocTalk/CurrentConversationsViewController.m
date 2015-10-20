@@ -44,31 +44,33 @@
         NSLog(@"%@", [error localizedDescription]);
     }
     
-    if ([directoryContents count] <= 2){
-        self.tableView.hidden = TRUE;
-        self.noMessage.hidden = FALSE;
+    
+    BOOL hasMessages = FALSE;
         
-    } else {
-        self.noMessage.hidden = TRUE;
+    for (NSString *fileName in directoryContents){
+        NSString *path = [self pathForFilename:fileName];
+        //NSLog(@"%@",path);
         
-        //needs for optimization
-        
-        for (NSString *fileName in directoryContents){
-            NSString *path = [self pathForFilename:fileName];
-            NSLog(@"%@",path);
-            
-            NSArray *unarchivedArray = [NSKeyedUnarchiver unarchiveObjectWithFile: path];
-            
+        NSArray *unarchivedArray = [NSKeyedUnarchiver unarchiveObjectWithFile: path];
+
+        if ([[unarchivedArray lastObject] isKindOfClass:[BlocTalkJSQMessage class]]){
             BlocTalkJSQMessage *lastMessage = [unarchivedArray lastObject];
             
-            if (unarchivedArray != nil) {
-                [self.conversationsList addObject:lastMessage];
-            }
+            [self.conversationsList addObject:lastMessage];
+            
+            hasMessages = TRUE;
         }
-        
-        NSLog(@"%@", self.conversationsList);
-
     }
+    
+    if (hasMessages) {
+        self.noMessage.hidden = TRUE;
+    } else {
+        self.tableView.hidden = TRUE;
+        self.noMessage.hidden = FALSE;
+    }
+    
+    //NSLog(@"%@", self.conversationsList);
+
     
 }
 
@@ -101,7 +103,7 @@
         cell.delegate = self;
         
         //cell.userName.text = user.name;
-        //cell.textPreview.text = @"Lorem ipsum dolor sit amet, alia essent facilisis cu vel, iudico adolescens et mea. No cum vero justo signiferumque. Ut vide assueverit est, vel idque virtute man";
+        //cell.textPreview.text = @"Lorem ipsum dolor sit amet, alia essent facilisis cu vel, iudico adolescens et mea. No cum vero justo signiferumque. Ut vide assueverit est, vel idque virtute man";    
         
     }
     
