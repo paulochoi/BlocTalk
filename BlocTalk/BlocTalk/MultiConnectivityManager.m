@@ -52,8 +52,17 @@
 
 -(void)advertiseSelf:(BOOL)shouldAdvertise {
     if (shouldAdvertise){
+        
+        NSString *userDisplayName;
+        
+        if ([[NSUserDefaults standardUserDefaults] stringForKey:@"UserDisplayName"]){
+            userDisplayName = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"UserDisplayName"]];
+        } else {
+            userDisplayName = [[UIDevice currentDevice] name];
+        }
+        
         NSDictionary *dict = @{@"deviceID": [[NSUserDefaults standardUserDefaults] stringForKey:@"UUID"],
-                               @"deviceDisplayName": [[UIDevice currentDevice] name]};
+                               @"deviceDisplayName": userDisplayName};
         
         self.advertiser = [[MCAdvertiserAssistant alloc] initWithServiceType:@"chat-service" discoveryInfo:dict session:self.session];
         
@@ -67,8 +76,6 @@
 - (void) saveDataToDiskWithMessageArray: (NSArray *)messages fromUser: (NSString *) userID{
     
     [NSKeyedArchiver archiveRootObject:messages toFile:[self pathForFilename:userID]];
-    
-    
 }
 
 - (NSString *) pathForFilename:(NSString *) filename {

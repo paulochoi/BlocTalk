@@ -10,6 +10,7 @@
 #import "AvailableUsersTableViewCell.h"
 #import "ChatViewController.h"
 #import "MBProgressHUD.h"
+#import "MultiConnectivityManager.h"
 
 
 @interface ConversationsViewController () <MCNearbyServiceBrowserDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -83,10 +84,10 @@
         NSString *userDeviceFileName = [NSString stringWithFormat:@"%@",userPeerID];
         Users *user = self.userList[self.clickedRow];
         
+        
         NSDictionary *dict = @{@"userDeviceID": userPeerID,
                                @"userID": user.userID};
         
-        NSLog(@"%@",state);
         
         if ([state isEqualToNumber:[NSNumber numberWithInt:MCSessionStateConnected]] ) {
             
@@ -96,9 +97,23 @@
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
             });
             
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            NSString* imageData = [[NSUserDefaults standardUserDefaults] objectForKey:@"userAvatar"];
             
-            NSString *documentsDirectory = [paths firstObject];
+            NSString *documentsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:imageData];
+            
+            UIImage* image = [UIImage imageWithContentsOfFile:documentsDirectory];
+            
+            NSData *mediaItemData = [NSKeyedArchiver archivedDataWithRootObject:image];
+            
+            NSError *error;
+            
+            NSArray *allPeers = [MultiConnectivityManager sharedInstance].session.connectedPeers;
+            
+            [[MultiConnectivityManager sharedInstance].session sendData:mediaItemData toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
+            
+            if (error){
+                NSLog(@"%@", [error localizedDescription]);
+            }
             
             [self performSegueWithIdentifier:@"chatNow" sender:dict];
             
@@ -132,7 +147,7 @@
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info{
     
     Users *user = [Users new];
-    user.name = peerID.displayName;
+    user.name = info[@"deviceDisplayName"];
     user.peerID = peerID;
     user.userID = info[@"deviceID"];
     

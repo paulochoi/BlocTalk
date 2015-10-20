@@ -62,9 +62,6 @@
         
         NSString *documentsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:imageData];
 
-        
-        BOOL test = [[NSFileManager defaultManager] fileExistsAtPath:documentsDirectory];
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             UIImage* image = [UIImage imageWithContentsOfFile:documentsDirectory];
             
