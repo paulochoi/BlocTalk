@@ -51,6 +51,7 @@
         NSString *path = [self pathForFilename:fileName];
         //NSLog(@"%@",path);
         
+        
         NSArray *unarchivedArray = [NSKeyedUnarchiver unarchiveObjectWithFile: path];
 
         if ([[unarchivedArray lastObject] isKindOfClass:[BlocTalkJSQMessage class]]){
@@ -97,7 +98,12 @@
         
         BlocTalkJSQMessage *message = self.conversationsList[indexPath.row];
         
-        cell.textPreview.text = message.text;
+        if (!message.isMediaMessage) {
+            cell.textPreview.text = message.text;
+        } else {
+            cell.textPreview.text = @"Picture sent to user";
+
+        }
         cell.userName.text = message.displayName;
         cell.rightUtilityButtons = [self rightButtons];
         cell.delegate = self;
