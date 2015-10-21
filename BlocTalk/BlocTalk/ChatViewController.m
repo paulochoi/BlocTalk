@@ -11,7 +11,7 @@
 #import "BlocTalkJSQMessage.h"
 
 
-@interface ChatViewController () <JSQMessagesCollectionViewDataSource, JSQMessagesCollectionViewDelegateFlowLayout>
+@interface ChatViewController () <JSQMessagesCollectionViewDataSource, JSQMessagesCollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *messages;
 @property (nonatomic, strong) ChatViewController *delegate;
@@ -194,7 +194,7 @@
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                          destructiveButtonTitle:nil
-                                              otherButtonTitles:@"Send photo", @"Send location", @"Send video", nil];
+                                              otherButtonTitles:@"Send photo", nil];
     
     [sheet showFromToolbar:self.inputToolbar];
 }
@@ -206,10 +206,16 @@
     }
     
     switch (buttonIndex) {
-        case 0:
-            [self.demoData addPhotoMediaMessage];
-            break;
             
+        case 0:{
+            
+            UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+            picker.delegate = self;
+            picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            [self presentViewController:picker animated:YES completion:nil];
+            
+            break;
+        }
         case 1:
         {
             __weak UICollectionView *weakView = self.collectionView;
@@ -224,6 +230,35 @@
             [self.demoData addVideoMediaMessage];
             break;
     }
+    
+}
+
+
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
+{
+    UIImage *myImage = image;
+    
+    
+    NSArray *allPeers = [MultiConnectivityManager sharedInstance].session.connectedPeers;
+
+    
+    JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:myImage];
+    BlocTalkJSQMessage *photoMessage = [BlocTalkJSQMessage messageWithSenderId:self.senderId
+                                                   displayName:self.displayName
+                                                         media:photoItem];
+    
+    photoMessage.displayName = self.displayName;
+    photoMessage.userID = self.deviceID;
+    
+    [self.messages addObject:photoMessage];
+    
+    NSError *error;
+    
+    NSData *mediaItemData = [NSKeyedArchiver archivedDataWithRootObject:photoMessage];
+    
+    [[MultiConnectivityManager sharedInstance].session sendData:mediaItemData toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
+
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
@@ -418,7 +453,6 @@
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     }
-    
     return cell;
 }
 
